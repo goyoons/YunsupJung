@@ -1,4 +1,4 @@
 YunsupJung
 ==========
 
-BIMM 185
+BIMM 185 - Project
