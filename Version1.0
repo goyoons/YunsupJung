@@ -1,0 +1,85 @@
+from tkinter import *
+from tkinter.filedialog import *
+from tkinter.messagebox import *
+
+def OpenFile():
+    name = askopenfilename()
+    return (name)
+
+def About():
+    print ("This is a simple example of a menu")
+
+def SetThreshold():
+    setT=Tk()
+    Label(setT, text="Fold Change Threshold", justify=LEFT, padx=18).pack()
+    #e1 = Entry(setT)
+    #e1.insert(10,1.2)
+    #e1.grid(row=0, column=1)
+    #Button(setT, text='Enter', command=setT.quit).grid(row=3, column=0)
+    MODES=[("Fold 1.2", "L"), ("Fold 1.5", "M"), ("Fold 2.0", "H"),]
+    v=StringVar()
+    v.set("L") #Initialize
+
+    for text, mode in MODES:
+        r = Radiobutton(setT, text=text, indicatoron=0,
+                        width=18, padx=18, variable=v, value=mode)
+        r.pack(anchor=W)
+    
+def SetPvalue():
+    setP=Tk()
+    Label(setP,text="P-value Threshold", justify=LEFT, padx=18).pack()
+    #e1 = Entry(setP)
+    #e1.insert(10,0.05)
+    #e1.grid(row=0,column=1)
+    MODES=[("P-Value 0.05", "L"), ("P-Value 0.01", "H"),]
+    v=StringVar()
+    v.set("L") #Initialize
+
+    for text, mode in MODES:
+        r = Radiobutton(setP, text=text, indicatoron=0,
+                        width=18, padx=18, variable=v, value=mode)
+        r.pack(anchor=W)
+    
+def SetFile():
+    name = OpenFile()
+    print (name)
+
+
+
+
+
+#Main Menu Through which to Loop   
+root = Tk()#sets root to main window
+logo = PhotoImage(file = "C:\Python34\Sanford\GoFly\GoFlyGo.gif")
+Label(root,image=logo).grid(row=1,column=1)
+menu = Menu(root)#sets menu to a Menu of root)
+root.config(menu=menu)#configures root to a menu)
+
+#File Tab
+filemenu = Menu(menu) #sets filemenu to Menu(menu)
+menu.add_cascade(label="File", menu=filemenu)#adds File to the cascade under filemenu
+filemenu.add_command(label="Open", command=OpenFile) #requests file when file is opened
+filemenu.add_separator() #adds space
+filemenu.add_command(label="Exit", command=menu.quit())#quits program
+
+#Settings Tab
+settingsmenu=Menu(menu)#sets seetingsmenu to Menu(menu)
+menu.add_cascade(label="Settings", menu=settingsmenu)#adds Settings to cascade
+settingsmenu.add_separator()
+settingsmenu.add_command(label="Fold Change",command=SetThreshold)
+settingsmenu.add_separator()
+settingsmenu.add_command(label="P-value",command=SetPvalue)
+
+#Run Tab
+runmenu=Menu(menu) # sets runmenu to Menu(menu)
+menu.add_cascade(label="KEGG Heatmaps",command=SetFile())
+
+
+#Help Tab
+helpmenu = Menu(menu)
+menu.add_cascade(label="Help", menu=helpmenu)
+helpmenu.add_command(label="About", command=About)
+
+mainloop( )
+
+
