@@ -4,7 +4,7 @@ from tkinter.messagebox import *
 
 def OpenFile():
     name = askopenfilename()
-    return (name)
+    return(name)
 
 def About():
     print ("This is a simple example of a menu")
@@ -15,8 +15,8 @@ def SetThreshold():
     #e1 = Entry(setT)
     #e1.insert(10,1.2)
     #e1.grid(row=0, column=1)
-    #Button(setT, text='Enter', command=setT.quit).grid(row=3, column=0)
-    MODES=[("Fold 1.2", "L"), ("Fold 1.5", "M"), ("Fold 2.0", "H"),]
+    MODES=[("Fold 1.2", "L"), ("Fold 1.5", "M"), ("Fold 2.0", "H"),
+           ("Default", "N"),]
     v=StringVar()
     v.set("L") #Initialize
 
@@ -31,7 +31,7 @@ def SetPvalue():
     #e1 = Entry(setP)
     #e1.insert(10,0.05)
     #e1.grid(row=0,column=1)
-    MODES=[("P-Value 0.05", "L"), ("P-Value 0.01", "H"),]
+    MODES=[("P-Value 0.05", "L"), ("P-Value 0.01", "H"), ("Default", "N"),]
     v=StringVar()
     v.set("L") #Initialize
 
@@ -42,25 +42,25 @@ def SetPvalue():
     
 def SetFile():
     name = OpenFile()
-    print (name)
+    print(name)
 
-
-
-
+def Exit():
+    root.destroy()
+    
 
 #Main Menu Through which to Loop   
 root = Tk()#sets root to main window
 logo = PhotoImage(file = "C:\Python34\Sanford\GoFly\GoFlyGo.gif")
 Label(root,image=logo).grid(row=1,column=1)
-menu = Menu(root)#sets menu to a Menu of root)
-root.config(menu=menu)#configures root to a menu)
+menu = Menu(root)#sets menu to a Menu of root
+root.config(menu=menu)#configures root to a menu
 
 #File Tab
 filemenu = Menu(menu) #sets filemenu to Menu(menu)
 menu.add_cascade(label="File", menu=filemenu)#adds File to the cascade under filemenu
 filemenu.add_command(label="Open", command=OpenFile) #requests file when file is opened
 filemenu.add_separator() #adds space
-filemenu.add_command(label="Exit", command=menu.quit())#quits program
+filemenu.add_command(label="Exit", command=Exit)#quits program
 
 #Settings Tab
 settingsmenu=Menu(menu)#sets seetingsmenu to Menu(menu)
@@ -72,14 +72,13 @@ settingsmenu.add_command(label="P-value",command=SetPvalue)
 
 #Run Tab
 runmenu=Menu(menu) # sets runmenu to Menu(menu)
-menu.add_cascade(label="KEGG Heatmaps",command=SetFile())
-
+menu.add_cascade(label="KEGG Heatmaps", menu=runmenu)
+runmenu.add_command(label="Run", command=SetFile)
 
 #Help Tab
 helpmenu = Menu(menu)
 menu.add_cascade(label="Help", menu=helpmenu)
 helpmenu.add_command(label="About", command=About)
 
-mainloop( )
-
+root.mainloop( )
 
